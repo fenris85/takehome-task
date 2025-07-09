@@ -1,0 +1,2 @@
+export const USTD0_ADDRESS = '0xaa480c5f5eb436d0645189ca20e5ade13aecaf27';
+export const USER_ADDRESS = '0xde7D4ca820d141d655420D959AfFa3920bb1E07A';
