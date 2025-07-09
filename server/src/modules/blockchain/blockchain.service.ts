@@ -9,7 +9,6 @@ export class BlockchainService {
   private readonly viemClient;
   private readonly usdt0Address: string;
   private readonly usdt0InitBlock: bigint;
-  private readonly userAddress: string;
 
   constructor(private readonly configService: ConfigService) {
     const rpcUrl = this.configService.get<string>('RPC_URL');
@@ -18,7 +17,6 @@ export class BlockchainService {
     }
 
     this.usdt0Address = this.configService.get<string>('USDT0_ADDRESS')!;
-    this.userAddress = this.configService.get<string>('USER_ADDRESS')!;
     this.usdt0InitBlock = this.configService.get<bigint>('USDT0_INIT_BLOCK')!;
 
     const chain = createHyperEvmChain(rpcUrl);
@@ -32,10 +30,6 @@ export class BlockchainService {
 
   getViemClient() {
     return this.viemClient;
-  }
-
-  getUserAddress(): string {
-    return this.userAddress;
   }
 
   getUsdt0Address(): string {

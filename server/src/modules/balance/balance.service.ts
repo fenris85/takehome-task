@@ -14,7 +14,7 @@ export class BalanceService {
 
   async getGasBalance(address?: string): Promise<string> {
     try {
-      const targetAddress = address || this.blockchainService.getUserAddress();
+      const targetAddress = address || '';
       const viemClient = this.blockchainService.getViemClient();
       
       const balance = await viemClient.getBalance({
@@ -33,7 +33,7 @@ export class BalanceService {
 
   async getUsdt0Balance(address?: string): Promise<string> {
     try {
-      const targetAddress = address || this.blockchainService.getUserAddress();
+      const targetAddress = address || '';
       const viemClient = this.blockchainService.getViemClient();
       const usdt0Address = this.blockchainService.getUsdt0Address();
       

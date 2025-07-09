@@ -17,7 +17,7 @@ export class TransferService {
 
   async indexUsdt0Transfers(fromBlock?: bigint, toBlock?: bigint, userAddress?: string) {
     try {
-      const targetAddress = userAddress || this.blockchainService.getUserAddress();
+      const targetAddress = userAddress || '';
       const viemClient = this.blockchainService.getViemClient();
       const usdt0Address = this.blockchainService.getUsdt0Address();
       const usdt0InitBlock = this.blockchainService.getUsdt0InitBlock();
@@ -112,13 +112,12 @@ export class TransferService {
         transfer.decimals = decimals as number;
         transfer.symbol = 'USDT0';
         
-        // Estimate block timestamp (this is rough, could be improved with actual block data)
         transfer.blockTimestamp = new Date(Date.now() - (Number(log.blockNumber) * 1000));
         
         return transfer;
       });
 
-      // Use upsert to handle duplicates gracefully
+      // Use upsert to handle duplicates
       await this.transferRepository.upsert(transferEntities, {
         conflictPaths: ['transactionHash'],
         skipUpdateIfNoValuesChanged: true,
@@ -133,7 +132,7 @@ export class TransferService {
 
   async getUsdt0Transfers(address?: string, page: number = 1, limit: number = 50) {
     try {
-      const targetAddress = (address || this.blockchainService.getUserAddress()).toLowerCase();
+      const targetAddress = (address ||'').toLowerCase();
       const usdt0Address = this.blockchainService.getUsdt0Address();
       
       this.logger.log(`Getting USDT0 transfers for ${targetAddress} from database`);
@@ -155,10 +154,9 @@ export class TransferService {
       if (transfers.length === 0) {
         this.logger.log(`No transfers found in database for ${targetAddress}, attempting to index...`);
         
-        // Try to index recent transfers if none found in database
+        // Indexing only few blocks because of some rpc endpoint issues while fetching logs
         await this.indexUsdt0Transfers(7800838n, 7800839n, targetAddress);
         
-        // Try fetching again after indexing
         const [newTransfers, newTotal] = await this.transferRepository.findAndCount({
           where: [
             { fromAddress: targetAddress, tokenAddress: usdt0Address.toLowerCase() },
