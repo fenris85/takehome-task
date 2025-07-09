@@ -96,3 +96,27 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## example .env.development config
+
+```
+# Server Configuration
+PORT=8080
+NODE_ENV=development
+
+# CORS Configuration  
+CORS_ORIGINS=http://localhost:3000
+
+# Database configuration
+DATABASE_URL=db/db.sqlite
+DATABASE_TYPE=sqlite
+DATABASE_SYNC=true
+
+# Blockchain confgiration
+RPC_URL=https://rpc.hyperliquid.xyz/evm
+USDT0_ADDRESS=0xaa480c5f5eb436d0645189ca20e5ade13aecaf27
+USDT0_INIT_BLOCK=5350082
+USER_ADDRESS=0xde7D4ca820d141d655420D959AfFa3920bb1E07A
+
+LOG_LEVEL=debug
+```
