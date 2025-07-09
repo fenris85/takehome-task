@@ -38,6 +38,10 @@ export class AppConfig {
   @IsString()
   @IsOptional()
   LOG_LEVEL: string = 'info';
+
+  @IsString()
+  @IsOptional()
+  CORS_ORIGINS: string = 'http://localhost:3000';
 }
 
 export const appConfig = (): AppConfig => {
@@ -54,6 +58,7 @@ export const appConfig = (): AppConfig => {
   config.DATABASE_TYPE = process.env.DATABASE_TYPE || 'sqlite';
   config.DATABASE_SYNC = process.env.DATABASE_SYNC === 'true' || process.env.NODE_ENV === 'development';
   config.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
+  config.CORS_ORIGINS = process.env.CORS_ORIGINS || 'http://localhost:3000';
 
   return config;
 }; 
