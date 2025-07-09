@@ -1,6 +1,6 @@
 import { defineChain } from 'viem';
 
-export const hyperEvm = defineChain({
+export const createHyperEvmChain = (rpcUrl: string) => defineChain({
   id: 999,
   name: 'HyperEVM',
   nativeCurrency: {
@@ -10,10 +10,7 @@ export const hyperEvm = defineChain({
   },
   rpcUrls: {
     default: {
-      // Alchemy key only used for the take home test
-      http: [
-        'https://hyperliquid-mainnet.g.alchemy.com/v2/a6fKU17T4X-ijZY7VShZX',
-      ],
+      http: [rpcUrl],
     },
   },
   blockExplorers: {
@@ -27,3 +24,5 @@ export const hyperEvm = defineChain({
     },
   },
 });
+
+export const hyperEvm = createHyperEvmChain(process.env.RPC_URL || '');
